@@ -4,10 +4,12 @@
 \alias{scite}
 \title{Get the scite journal-level tallies for a character vector of ISSNs}
 \usage{
-scite(issn)
+scite(issn, keep_null)
 }
 \arguments{
 \item{issn}{A vector of ISSNs}
+
+\item{keep_null}{Either TRUE or FALSE; defaults to FALSE}
 }
 \value{
 A data frame of scite tallies of scite journal index (sji), total citations, total supporting citations, total contradicting citations, total mentioning citations
@@ -16,4 +18,6 @@ A data frame of scite tallies of scite journal index (sji), total citations, tot
 Each issn should be of the format "xxxx-xxxx". A vector of issns should be of the format c("xxxx-xxxx", "xxxx-xxxx", ...), respectively. If scite does not have data for a given ISSN, the function will not return any information.
 If the function returns an error, try passing the list of ISSNs in smaller batches.
 SJI is only calculated for journals where supporting citations + contradicting citations > 500.
+
+Setting keep_null to TRUE will result in cell values that need to be unlisted
 }

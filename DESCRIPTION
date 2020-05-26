@@ -8,7 +8,7 @@ Authors@R:
            email = "masonhayes2@protonmail.com")
 Description: This package provides access to the scite API. scite provides data on journal citations, classifying them by supporting, contradicting, or mentioning using their deep learning model.
 License: MIT
-Depends: curl, httr, tidyverse
+Depends: curl, httr, tidyverse, data.table
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0

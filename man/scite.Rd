@@ -16,8 +16,10 @@ A data frame of scite tallies of scite journal index (sji), total citations, tot
 }
 \description{
 Each issn should be of the format "xxxx-xxxx". A vector of issns should be of the format c("xxxx-xxxx", "xxxx-xxxx", ...), respectively. If scite does not have data for a given ISSN, the function will not return any information.
+
 If the function returns an error, try passing the list of ISSNs in smaller batches.
+
 SJI is only calculated for journals where supporting citations + contradicting citations > 500.
 
-Setting keep_null to TRUE will result in cell values that need to be unlisted
+Warning: setting keep_null to TRUE will result in cell values that need to be unlisted
 }

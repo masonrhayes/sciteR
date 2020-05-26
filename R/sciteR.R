@@ -17,15 +17,17 @@ scite <- function (issn, keep_null) {
              query = list(issn = issn_string))
   tallies <- api_response %>%
     content(type = "application/json") %>%
-    as_tibble() %>%
+    as.data.table() %>%
     t() %>%
-    as.data.frame() %>%
-    setNames(., c("issn", "sji_all_years", "sji_five_years", "sji_two_years",
-                  "total_cites", "total_contradicting_cites",
+    as_tibble() %>%
+    setNames(., c("issn", "total_cites", "total_contradicting_cites",
                   "total_mentioning_cites", "total_supporting_cites",
                   "total_unclassified"))
   if (missing(keep_null)) {
     keep_null <- FALSE
+    for (i in 1:length(tallies)) {
+      tallies[,i] <- unlist(tallies[,i])
+    }
   }
   if (keep_null == FALSE) {
     for (i in 1:length(tallies)) {
@@ -37,4 +39,3 @@ scite <- function (issn, keep_null) {
   return(tallies)
 }
 
-## Create function to remove

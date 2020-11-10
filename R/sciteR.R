@@ -13,16 +13,21 @@
 #' @export
 scite <- function (issn, keep_null) {
   issn_string <- paste(issn, collapse = ",")
-  api_response <- httr::VERB(verb = "GET", url = "https://api.scite.ai/issn-tallies",
-             query = list(issn = issn_string))
+  api_response <- httr::VERB(verb = "GET", url = "https://api.scite.ai/issn-tallies", query = list(issn = issn_string))
   tallies <- api_response %>%
     content(type = "application/json") %>%
     as.data.table() %>%
     t() %>%
     as_tibble() %>%
-    setNames(., c("issn", "total_cites", "total_contradicting_cites",
-                  "total_mentioning_cites", "total_supporting_cites",
-                  "total_unclassified"))
+    setNames(., c("issns", "journal", "journal_slug", "total_cites", "contradicting_cites", "mentioning_cites", "supporting_cites", "unclassified_cites")) %>%
+    select(-c(journal_slug, unclassified_cites))
+
+  ## Some journals have multiple ISSNs which are return in a list. Unlist all of these and just keep the first one.
+
+  for(i in 1:dim(tallies)[1]){
+    tallies$issns[i] = unlist(tallies$issns[i])
+    }
+
   if (missing(keep_null)) {
     keep_null <- FALSE
     for (i in 1:length(tallies)) {

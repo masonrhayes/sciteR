@@ -1,5 +1,5 @@
 # sciteR
-`sciteR` is an R package to access the [scite](https://scite.ai) API . It contains only one function, `scite()`, which takes a list of [ISSNs](http://www.issn.org/understanding-the-issn/what-is-an-issn/) as input and returns scite's journal-level data for each ISSN: total citations, supporting citations, contradicting citations. It also returns the scite journal index (sji) for all years, five years, and two years. 
+`sciteR` is an R package to access the [scite](https://scite.ai) API . It contains only one function, `scite()`, which takes a list of [ISSNs](http://www.issn.org/understanding-the-issn/what-is-an-issn/) as input and returns scite's journal-level data for each ISSN: total citations, supporting citations, contradicting citations. 
 
 **Update, May 2020:** the scite API no longer returns any scite journal index data, but this can be manually calculated if you wish with the simple formula (# of supporting citations)/(# of supporting + contradicting citations).
 

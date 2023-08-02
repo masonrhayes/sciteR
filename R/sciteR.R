@@ -10,7 +10,9 @@
 #' SJI is only calculated for journals where supporting citations + contradicting citations > 500.
 #'
 #' Warning: setting keep_null to TRUE will result in cell values that need to be unlisted
+#'
 #' @export
+
 scite <- function (issn, keep_null) {
   issn_string <- paste(issn, collapse = ",")
   api_response <- httr::VERB(verb = "GET", url = "https://api.scite.ai/issn-tallies", query = list(issn = issn_string))
@@ -18,9 +20,10 @@ scite <- function (issn, keep_null) {
     content(type = "application/json") %>%
     as.data.table() %>%
     t() %>%
-    as_tibble() %>%
-    setNames(., c("issns", "journal", "journal_slug", "total_cites", "contradicting_cites", "mentioning_cites", "supporting_cites", "unclassified_cites")) %>%
-    select(-c(journal_slug, unclassified_cites))
+    as.data.frame() %>%
+    setNames(., c("totalCites","totalSupportingCites", "totalMentioningCites", "totalContradictingCites",  "totalUnclassifiedCites", "journal", "issns", "journalSlug")) %>%
+    select(-c(journalSlug, totalUnclassifiedCites)) %>%
+    select(issns, journal, everything())
 
   ## Some journals have multiple ISSNs which are return in a list. Unlist all of these and just keep the first one.
 
@@ -41,6 +44,6 @@ scite <- function (issn, keep_null) {
       tallies[,i] <- unlist(tallies[,i])
     }
   }
-  return(tallies)
+  return(tibble(tallies))
 }
 
